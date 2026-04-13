@@ -1,21 +1,17 @@
-// Physical Edge Node: Arduino + MQ135
-// Author: Shaimaa Ghoneim
+// Author: Shaimaa
 
-const int MQ135_PIN = A0; // MQ-135 analog output connected to A0
+int sensorPin = A0;      // MQ-135 connected to A0
+int sensorValue = 0;     // variable to store sensor value
 
 void setup() {
-  // Initialize serial communication to match the Python bridge
-  Serial.begin(9600); 
-  pinMode(MQ135_PIN, INPUT);
+  Serial.begin(9600);    // start serial communication
 }
 
 void loop() {
-  // Read the raw analog voltage from the sensor
-  int aqi_raw = analogRead(MQ135_PIN);
+  sensorValue = analogRead(sensorPin);  // read analog value
   
-  // Broadcast only the integer to the Serial port for the Python script to catch
-  Serial.println(aqi_raw); 
+  Serial.print("AQI Value: ");
+  Serial.println(sensorValue);          // print value
   
-  // 5-second delay to match the temporal resampling baseline in the report
-  delay(5000); 
+  delay(5000);  // wait 5 seconds (required in project)
 }
